@@ -21,4 +21,8 @@ class User < ActiveRecord::Base
     self.token = auth['credentials']['token']
     self.secret = auth['credentials']['secret']
   end
+  def client
+    Twitter::Client.new(:oauth_token => self.token,
+               :oauth_token_secret => self.secret)
+  end
 end
