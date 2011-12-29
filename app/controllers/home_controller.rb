@@ -1,6 +1,7 @@
+# coding: utf-8
+
 class HomeController < ApplicationController
   require 'yaml'
-  require 'pry'
   def index
   end
   def investigate
@@ -19,9 +20,10 @@ class HomeController < ApplicationController
       return
     end
     # now logged in
-    puts "----------------------now logged in "
+    logger.info "----------------------now logged in "
     begin
       c = current_user.client
+      raise Twitter::Error::BadRequest if c.rate_limit_status.remaining_hits < 20
       a_user = c.user a
       b_user = c.user b
       a_uid  = a_user.attrs["id"]
@@ -30,23 +32,23 @@ class HomeController < ApplicationController
       @b = b_user.attrs["screen_name"]
       a_target = Target.find_or_create a_uid
       b_target = Target.find_or_create b_uid
-    puts "----------------------target set"
+    logger.info "----------------------target set"
       a_th = Thread.new {a_target.fill(current_user)}
       b_target.fill(current_user)
       a_th.join
-    puts "----------------------filled"
+    logger.info "----------------------filled"
       a_samples = YAML::load(a_target.samples)
       b_samples = YAML::load(b_target.samples)
-    puts "----------------------loaded "
+    logger.info "----------------------loaded "
       @pval = kentei(a_samples, b_samples)
     rescue Twitter::Error::Unauthorized
-      session[:user_id] = nil
+      session[:notice] = "鍵つきアカウントには使えません．"
       redirect_to root_url
     rescue Twitter::Error::NotFound
-      session[:notice] = "not found"
+      session[:notice] = "そのひとはみつかりません．"
       redirect_to root_url
     rescue Twitter::Error::BadRequest
-      session[:notice] = "tsukai sugi?"
+      session[:notice] = "つかいすぎです．"
       redirect_to root_url
     end
   end
@@ -74,8 +76,6 @@ class HomeController < ApplicationController
     return 0.0 if as == bs && as.length > 5
     R.eval "y.data <- data.frame( as = a_row, bs = b_row, cs = c_row )"
     R.eval "library(ppcor)"
-    # want to call pry
-    # binding.pry
     begin
       results = R.pull 'as.numeric(pcor.test(y.data$as,y.data$bs,y.data[,c("cs")]))'
     rescue NoMethodError

@@ -1,6 +1,7 @@
-<h1>Kietter</h1>
+<h1>きえったー</h1>
+<p>Twitterから同時に消える人をみつけます．</p>
 <% if session[:notice] %>
-<p>notice: <%= h(session[:notice]) %> </p>
+<p>えっと，<%= h(session[:notice]) %> </p>
 <% end %>
 <% if current_user %>
 <p> <%= current_user.screen_name %> </p>
@@ -8,9 +9,9 @@
 <p> not logged in </p>
 <% end %>
 
-<p> compare these accounts (not working for protected accounts) </p>
+<p>ふたつのアカウントをくらべます(鍵つきアカウントには使えません)．</p>
 <%= form_tag(url_for(:action => :investigate)) do %>
 <p>@<%= text_field_tag 'a' %></p>
 <p>@<%= text_field_tag 'b' %></p>
-<p><%= submit_tag 'compare' %>
+<p><%= submit_tag 'くらべる' %>
 <% end %>

@@ -1,24 +1,24 @@
-<h1>Home#investigate</h1>
+<h1>きえったー結果</h1>
 <% if session[:notice] %>
-<p>notice: <%= h(session[:notice]) %> </p>
+<p>えっと，<%= h(session[:notice]) %> </p>
 <% end %>
-<p>comparing <%= h(@a) %> and <%= h(@b) %></p>
-<p>p-val = <%= h(@pval) %></p>
-<p>
+<p>@<%= h(@a) %>と@<%= h(@b) %>は，
 <% if @pval == nil %>
-wakaran-pon
+おなじ時間に消えているか，よくわからんぽん．
 <% elsif @pval < 0.01 %>
-extremely similar
+実際おなじ時間に消えています．
 <% elsif @pval < 0.05 %>
-similar
+わりとおなじ時間に消えています．
 <% elsif @pval < 0.1 %>
-maybe similar
+ちょっとおなじ時間に消えています．
 <% else %>
-not particularly similar
+べつにおなじ時間に消えていません．
 <% end %>
+</p>
+<p>(p-val = <%= h(@pval) %>)</p>
 
 <% if current_user %>
-<p> you are <%= current_user.screen_name %> </p>
+<p>@<%= current_user.screen_name %>としてログインしています．</p>
 <% else %>
-<p>not logged in.  strange.</p>
+<p>ログインしていないのにこのページにいる．なにかおかしい．</p>
 <% end %>
