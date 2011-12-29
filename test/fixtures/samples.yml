@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  target_id: 1
+  period: 2011-12-29 22:42:40
+  presence: 
+
+two:
+  target_id: 1
+  period: 2011-12-29 22:42:40
+  presence: 
