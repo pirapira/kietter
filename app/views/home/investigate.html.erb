@@ -2,9 +2,23 @@
 <% if session[:notice] %>
 <p>notice: <%= h(session[:notice]) %> </p>
 <% end %>
-<p><%= h(@a_samples.length) %>,  <%= h(@b_samples.length) %></p>
+<p>comparing <%= h(@a) %> and <%= h(@b) %></p>
+<p>p-val = <%= h(@pval) %></p>
+<p>
+<% if @pval == nil %>
+wakaran-pon
+<% elsif @pval < 0.01 %>
+extremely similar
+<% elsif @pval < 0.05 %>
+similar
+<% elsif @pval < 0.1 %>
+maybe similar
+<% else %>
+not particularly similar
+<% end %>
+
 <% if current_user %>
-<p> <%= current_user.screen_name %> </p>
+<p> you are <%= current_user.screen_name %> </p>
 <% else %>
 <p>not logged in.  strange.</p>
 <% end %>

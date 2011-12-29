@@ -1,4 +1,4 @@
-<h1>Home#index</h1>
+<h1>Kietter</h1>
 <% if session[:notice] %>
 <p>notice: <%= h(session[:notice]) %> </p>
 <% end %>
@@ -8,8 +8,9 @@
 <p> not logged in </p>
 <% end %>
 
+<p> compare these accounts (not working for protected accounts) </p>
 <%= form_tag(url_for(:action => :investigate)) do %>
 <p>@<%= text_field_tag 'a' %></p>
 <p>@<%= text_field_tag 'b' %></p>
-<p><%= submit_tag %>
+<p><%= submit_tag 'compare' %>
 <% end %>
