@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  uid: 1
+  sample_start: 2011-12-29 22:36:15
+  sample_end: 2011-12-29 22:36:15
+
+two:
+  uid: 1
+  sample_start: 2011-12-29 22:36:15
+  sample_end: 2011-12-29 22:36:15
