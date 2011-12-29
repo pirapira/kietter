@@ -45,6 +45,9 @@ class HomeController < ApplicationController
     rescue Twitter::Error::NotFound
       session[:notice] = "not found"
       redirect_to root_url
+    rescue Twitter::Error::BadRequest
+      session[:notice] = "tsukai sugi?"
+      redirect_to root_url
     end
   end
 
