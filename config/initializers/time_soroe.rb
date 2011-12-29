@@ -1,5 +1,5 @@
-class Time
-  def Time.tanni
+class DateTime
+  def DateTime.tanni
     1.hour
   end
   def soroe
