@@ -10,14 +10,14 @@ class HomeController < ApplicationController
       @a = params[:a]
       @b = params[:b]
     end
-    if current_user
-      c = current_user.client
-      @a_user = c.user @a
-      @b_user = c.user @b
-    else
+    unless current_user
       session[:a] = @a
       session[:b] = @b
       redirect_to "/auth/twitter"
     end
+    # now logged in
+    c = current_user.client
+    @a_user = c.user @a
+    @b_user = c.user @b
   end
 end
