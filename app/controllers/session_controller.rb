@@ -6,11 +6,11 @@ class SessionController < ApplicationController
       user = User.create_with_omniauth(auth)
     end
     session[:user_id] = user.id
-    redirect_to url_for :controller => :home, :action => :investigate, :notice => "Signed in!"
+    redirect_to url_for :controller => :home, :action => :investigate
   end
 
   def destroy
     session.clear
-    redirect_to :back, :notice => "Signed out!"
+    redirect_to :back
   end
 end
