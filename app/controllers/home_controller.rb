@@ -31,10 +31,10 @@ class HomeController < ApplicationController
       a_target = Target.find_or_create a_uid
       b_target = Target.find_or_create b_uid
     puts "----------------------target set"
-      a_target.fill(current_user)
-    puts "----------------------a filled"
+      a_th = Thread.new {a_target.fill(current_user)}
       b_target.fill(current_user)
-    puts "----------------------b filled"
+      a_th.join
+    puts "----------------------filled"
       a_samples = YAML::load(a_target.samples)
       b_samples = YAML::load(b_target.samples)
     puts "----------------------loaded "
