@@ -9,5 +9,6 @@ class CreateUsers < ActiveRecord::Migration
       t.text     "secret",      :null => false
       t.timestamps
     end
+    add_index :users, :uid
   end
 end
