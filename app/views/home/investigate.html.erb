@@ -2,7 +2,7 @@
 <% if session[:notice] %>
 <p>notice: <%= h(session[:notice]) %> </p>
 <% end %>
-<p><%= h(@a) %>,  <%= h(@b) %></p>
+<p><%= h(@a_user.name) %>,  <%= h(@b_user.name) %></p>
 <% if current_user %>
 <p> <%= current_user.screen_name %> </p>
 <% else %>
