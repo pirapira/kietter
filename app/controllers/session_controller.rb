@@ -6,7 +6,7 @@ class SessionController < ApplicationController
       user = User.create_with_omniauth(auth)
     end
     session[:user_id] = user.id
-    redirect_to root_url, :notice => "Signed in!"
+    redirect_to url_for :controller => :home, :action => :investigate, :notice => "Signed in!"
   end
 
   def destroy

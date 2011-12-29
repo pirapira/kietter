@@ -1,0 +1,10 @@
+<h1>Home#investigate</h1>
+<% if session[:notice] %>
+<p>notice: <%= h(session[:notice]) %> </p>
+<% end %>
+<p>Find me in app/views/home/investigate.html.erb</p>
+<% if current_user %>
+<p> <%= current_user.screen_name %> </p>
+<% else %>
+<p>not logged in.  strange.</p>
+<% end %>
