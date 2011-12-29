@@ -4,7 +4,7 @@
 <% end %>
 <p>Find me in app/views/home/index.html.erb</p>
 <% if current_user %>
-<p> <%= current_user.screen_name %>
-</p>
-
+<p> <%= current_user.screen_name %> </p>
+<% else %>
+<p> not logged in </p>
 <% end %>
