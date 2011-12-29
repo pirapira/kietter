@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
   end
   def set_by(auth)
     self.provider = auth["provider"]
-    self.uid = auth["uid"]
+    self.uid = auth["uid"].to_i
     self.name = auth["user_info"]["name"]
     self.screen_name = auth["user_info"]["nickname"]
     self.token = auth['credentials']['token']
