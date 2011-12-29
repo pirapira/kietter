@@ -31,17 +31,30 @@ class User < ActiveRecord::Base
     ret = []
     last_id_str = nil
     begin
-      if first
-        tl = c.user_timeline(target, :include_rts => true, :count => 200)
-      else
-        tl = c.user_timeline(target, :include_rts => true, :count => 200, :max_id => last_id_str)
-      end
+      tl = nil
+      retry_num = 3
+      begin
+        if first
+          tl = c.user_timeline(target, :include_rts => true, :count => 200)
+        else
+          tl = c.user_timeline(target, :include_rts => true, :count => 200, :max_id => last_id_str)
+        end
+      rescue Twitter::Error::BadGateway
+        retry_num = retry_num - 1
+      end while ((tl == nil) && (retry_num > 0))
       break if tl == []
-      ret += tl.drop(1).collect {|t| t.attrs["created_at"].to_datetime}
+      if first
+        ret += tl.collect {|t| t.attrs["created_at"].to_datetime}
+      else
+        ret += tl.drop(1).collect {|t| t.attrs["created_at"].to_datetime}
+      end
       new_id_str = tl[-1].attrs["id_str"]
       break if new_id_str == last_id_str
       last_id_str = new_id_str
       first = false
+    # debug
+
+      puts tl[-1].attrs["created_at"]
     end while true
     return ret
   end
