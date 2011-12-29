@@ -25,4 +25,24 @@ class User < ActiveRecord::Base
     Twitter::Client.new(:oauth_token => self.token,
                :oauth_token_secret => self.secret)
   end
+  def look(target) # target can be uid or screen_name
+    c = client
+    first = true
+    ret = []
+    last_id_str = nil
+    begin
+      if first
+        tl = c.user_timeline(target, :include_rts => true, :count => 200)
+      else
+        tl = c.user_timeline(target, :include_rts => true, :count => 200, :max_id => last_id_str)
+      end
+      break if tl == []
+      ret += tl.drop(1).collect {|t| t.attrs["created_at"].to_datetime}
+      new_id_str = tl[-1].attrs["id_str"]
+      break if new_id_str == last_id_str
+      last_id_str = new_id_str
+      first = false
+    end while true
+    return ret
+  end
 end
