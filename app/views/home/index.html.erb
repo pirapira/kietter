@@ -2,9 +2,14 @@
 <% if session[:notice] %>
 <p>notice: <%= h(session[:notice]) %> </p>
 <% end %>
-<p>Find me in app/views/home/index.html.erb</p>
 <% if current_user %>
 <p> <%= current_user.screen_name %> </p>
 <% else %>
 <p> not logged in </p>
+<% end %>
+
+<%= form_tag(url_for(:action => :investigate)) do %>
+<p>@<%= text_field_tag 'a' %></p>
+<p>@<%= text_field_tag 'b' %></p>
+<p><%= submit_tag %>
 <% end %>
