@@ -1,2 +1,10 @@
 <h1>Home#index</h1>
+<% if session[:notice] %>
+<p>notice: <%= h(session[:notice]) %> </p>
+<% end %>
 <p>Find me in app/views/home/index.html.erb</p>
+<% if current_user %>
+<p> <%= current_user.screen_name %>
+</p>
+
+<% end %>
