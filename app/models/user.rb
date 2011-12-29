@@ -52,10 +52,7 @@ class User < ActiveRecord::Base
       break if new_id_str == last_id_str
       last_id_str = new_id_str
       first = false
-    # debug
-
-      puts tl[-1].attrs["created_at"]
-    end while true
+    end while tl[-1].attrs["created_at"].to_datetime >= Time.now - 1.month
     return ret
   end
 end
