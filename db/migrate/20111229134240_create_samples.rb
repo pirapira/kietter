@@ -3,7 +3,7 @@ class CreateSamples < ActiveRecord::Migration
     create_table :samples do |t|
       t.integer :target_id
       t.datetime :period
-      t.bool :presence
+      t.boolean :presence
 
       t.timestamps
     end
