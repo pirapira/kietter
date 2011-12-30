@@ -5,10 +5,10 @@
 <% session[:notice] = nil %>
 <% end %>
 
-<p>ふたつのアカウントをくらべます(鍵つきアカウントには使えません)．</p>
+<p>ふたつのアカウントをくらべます．</p>
 <%= form_tag(url_for(:action => :investigate)) do %>
 <p>@<%= text_field_tag 'a' %></p>
 <p>@<%= text_field_tag 'b' %></p>
 <p><%= submit_tag 'くらべる', :disable_with => 'wait...' %></p>
-<p>Twitterでログインしてから「アプリケーションにもどります」のところで1分くらい待つかもしれません．</p>
+<p>Twitterでログインしてから<strong>「アプリケーションにもどります」のところで1分くらい待つかもしれません</strong>．</p>
 <% end %>

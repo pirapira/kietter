@@ -58,12 +58,12 @@ class HomeController < ApplicationController
       @pval = k[:pval]
       @cov  = k[:cov]
     rescue NotEnoughData
-      session[:notice] = "鍵つきアカウントには使えません．"
+      session[:notice] = "なんかtweetが拾えませんでした．"
       redirect_to root_url
     rescue Twitter::Error::Unauthorized
       current_user.destroy
       session[:user_id] = nil
-      session[:notice] = "鍵つきアカウントには使えません．"
+      session[:notice] = "認証がうまくいっていないようです．あるいは，フォローしていない鍵つきアカウントをみようとしたのかも．"
       redirect_to root_url
     rescue Twitter::Error::NotFound
       session[:notice] = "そのひとはみつかりません．"
@@ -72,7 +72,7 @@ class HomeController < ApplicationController
       session[:notice] = "つかいすぎです．"
       redirect_to root_url
     rescue Twitter::Error::ServiceUnavailable
-      session[:notice] = "twitter not available; try again..."
+      session[:notice] = "Twitterからservice unavailableっていわれたけど，もいちどためすとうまくいくかも"
       redirect_to root_url
     rescue Twitter::Error::BadRequest
       session[:notice] = "つかいすぎです．"
