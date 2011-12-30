@@ -46,7 +46,7 @@ class User < ActiveRecord::Base
       ret += tl.collect {|t| t.attrs["created_at"].to_datetime}
       n = n + 1
     end while tl[-1].attrs["created_at"].to_datetime >= since
-    reached = td[-1].attrs["created_at"].to_datetime < since
+    reached = ret.length > 0 && ret[-1] < since
     return {:array => ret, :reached => reached}
   end
   def getpage(pnum,c,target)
