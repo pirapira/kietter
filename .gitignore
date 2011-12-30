@@ -17,3 +17,5 @@
 /config/database.yml
 /db/schema.rb
 config/initializers/omniauth.rb
+/.sass-cache
+config/initializers/exception_notification.rb

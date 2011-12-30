@@ -12,6 +12,9 @@ gem 'omniauth'
 gem 'omniauth-twitter'
 gem 'rinruby'
 
+gem "exception_notification",
+        :git => "git://github.com/rails/exception_notification.git",
+        :require => "exception_notifier"
 
 # Gems used only for assets and not required
 # in production environments by default.
