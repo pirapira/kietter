@@ -1,12 +1,7 @@
 <h1>きえったー</h1>
-<p>Twitterから同時に消える人をみつけます．</p>
+<p>Twitterから同時に消える人をみつけます．<a href="http://b.hatena.ne.jp/entry/http://kietter.com" class="hatena-bookmark-button" data-hatena-bookmark-title="きえったー" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script></p>
 <% if session[:notice] %>
 <p>えっと，<%= h(session[:notice]) %> </p>
-<% end %>
-<% if current_user %>
-<p> <%= current_user.screen_name %> </p>
-<% else %>
-<p> not logged in </p>
 <% end %>
 
 <p>ふたつのアカウントをくらべます(鍵つきアカウントには使えません)．</p>
@@ -14,5 +9,5 @@
 <p>@<%= text_field_tag 'a' %></p>
 <p>@<%= text_field_tag 'b' %></p>
 <p><%= submit_tag 'くらべる' %></p>
-<p>Twitterでログインしようとするとそこで1分くらい待つかもしれません．</p>
+<p>Twitterでログインしてから「アプリケーションにもどります」のところで1分くらい待つかもしれません．</p>
 <% end %>
