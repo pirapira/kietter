@@ -30,29 +30,30 @@ class User < ActiveRecord::Base
     first = true
     ret = []
     last_id_str = nil
+    n = 0
     begin
-      tl = nil
-      retry_num = 3
-      begin
-        if first
-          tl = c.user_timeline(target, :include_rts => true, :count => 200)
-        else
-          tl = c.user_timeline(target, :include_rts => true, :count => 200, :max_id => last_id_str)
-        end
-      rescue Twitter::Error::BadGateway
-        retry_num = retry_num - 1
-      end while ((tl == nil) && (retry_num > 0))
+      th1 = Thread.new{ getpage(1 + 4 * n, c, target)}
+      th2 = Thread.new{ getpage(2 + 4 * n, c, target)}
+      th3 = Thread.new{ getpage(3 + 4 * n, c, target)}
+      th4 = Thread.new{ getpage(4 + 4 * n, c, target)}
+      tl = th1.value + th2.value + th3.value + th4.value
       break if tl == []
-      if first
-        ret += tl.collect {|t| t.attrs["created_at"].to_datetime}
-      else
-        ret += tl.drop(1).collect {|t| t.attrs["created_at"].to_datetime}
-      end
-      new_id_str = tl[-1].attrs["id_str"]
-      break if new_id_str == last_id_str
-      last_id_str = new_id_str
-      first = false
+      ret += tl.collect {|t| t.attrs["created_at"].to_datetime}
+      n = n + 1
     end while tl[-1].attrs["created_at"].to_datetime >= Time.now - 1.month
     return ret
+  end
+  def getpage(pnum,c,target)
+    tl = nil
+    retry_num = 3
+    begin
+      tl = c.user_timeline(target, :include_rts => true, :count => 200, :page => pnum)
+    rescue Twitter::Error::BadGateway
+      retry_num = retry_num - 1
+    rescue
+      return []
+    end while ((tl == nil) && (retry_num > 0))
+    return [] unless tl
+    return tl
   end
 end
