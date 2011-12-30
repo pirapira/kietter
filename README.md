@@ -3,6 +3,11 @@ Kietter
 Author: Yoichi Hirai 2011
 for license, see LICENSE
 
+what it does
+------------
+
+Kietter tells you whether two twitter users are disappearing at the same time.
+
 installation
 ------------
 
