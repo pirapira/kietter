@@ -3,7 +3,7 @@
 <p>えっと，<%= h(session[:notice]) %> </p>
 <% end %>
 
-<% if @cov == nil || @cov = 0.0
+<% if @cov == nil || @cov == 0.0
      keikou = ""
    elsif @cov > 0.0
      keikou = "おなじ時間に"
