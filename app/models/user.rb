@@ -36,6 +36,7 @@ class User < ActiveRecord::Base
     last_id_str = nil
     n = 0
     begin
+      break if n >= 4
       th1 = Thread.new{ getpage(1 + 4 * n, c, target)}
       th2 = Thread.new{ getpage(2 + 4 * n, c, target)}
       th3 = Thread.new{ getpage(3 + 4 * n, c, target)}
