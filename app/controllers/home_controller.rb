@@ -88,7 +88,7 @@ class HomeController < ApplicationController
     raise NotEnoughData unless a_arr[0] && b_arr[0]
     kara = [a_arr[0], b_arr[0]].max
     made = [a_arr[-1],b_arr[-1]].min
-    raise Exception if kara > made
+    return [nil,nil] if kara > made
     a_set = Set.new a_arr
     b_set = Set.new b_arr
     range = []
