@@ -55,9 +55,8 @@ class User < ActiveRecord::Base
     begin
       tl = c.user_timeline(target, :include_rts => true, :count => 200, :page => pnum)
     rescue Twitter::Error::BadGateway
+      raise Twitter::Error::BadGateway if retry_num <= 0
       retry_num = retry_num - 1
-    rescue
-      return []
     end while ((tl == nil) && (retry_num > 0))
     return [] unless tl
     return tl

@@ -2,6 +2,8 @@
 
 class HomeController < ApplicationController
   require 'yaml'
+  class NotEnoughData < Exception
+  end
   def index
   end
   def investigate
@@ -47,6 +49,9 @@ class HomeController < ApplicationController
       k = kentei(a_samples, b_samples)
       @pval = k[:pval]
       @cov  = k[:cov]
+    rescue NotEnoughData
+      session[:notice] = "鍵つきアカウントには使えません．"
+      redirect_to root_url
     rescue Twitter::Error::Unauthorized
       session[:notice] = "鍵つきアカウントには使えません．"
       redirect_to root_url
@@ -64,6 +69,7 @@ class HomeController < ApplicationController
   def kentei(a_arr, b_arr)
     require "rinruby"
     require 'set'
+    raise NotEnoughData unless a_arr[0] && b_arr[0]
     kara = [a_arr[0], b_arr[0]].max
     made = [a_arr[-1],b_arr[-1]].min
     raise Exception if kara > made

@@ -1,6 +1,7 @@
 <h1>きえったー結果</h1>
 <% if session[:notice] %>
 <p>えっと，<%= h(session[:notice]) %> </p>
+<% session[:notice] = nil %>
 <% end %>
 
 <% unless @same %>
