@@ -25,7 +25,12 @@ class User < ActiveRecord::Base
     Twitter::Client.new(:oauth_token => self.token,
                :oauth_token_secret => self.secret)
   end
-  def look(target) # target can be uid or screen_name
+  def look(target,since) # target can be uid or screen_name
+    if since
+      since = [since, Time.now - 1.month].max
+    else
+      since = Time.now - 1.month
+    end
     c = client
     first = true
     ret = []
@@ -40,7 +45,7 @@ class User < ActiveRecord::Base
       break if tl == []
       ret += tl.collect {|t| t.attrs["created_at"].to_datetime}
       n = n + 1
-    end while tl[-1].attrs["created_at"].to_datetime >= Time.now - 1.month
+    end while tl[-1].attrs["created_at"].to_datetime >= since
     return ret
   end
   def getpage(pnum,c,target)
