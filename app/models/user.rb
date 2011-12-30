@@ -32,7 +32,6 @@ class User < ActiveRecord::Base
       since = Time.now - 1.month
     end
     c = client
-    first = true
     ret = []
     last_id_str = nil
     n = 0
