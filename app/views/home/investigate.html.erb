@@ -14,22 +14,36 @@
    end
 %>
 
-<p>@<%= h(@a) %>と@<%= h(@b) %>は
+<% sentence = "@#{h(@a)}と@#{h(@b)}は" %>
 <% if @pval == nil %>
-<%= keikou %>消えているか，よくわからんぽん．
+  <% sentence += keikou + "消えているか，よくわからんぽん．" %>
 <% elsif @pval < 0.01 %>
-実際<%= keikou %>消えています．
+  <% sentence += "実際#{keikou}消えています．" %>
 <% elsif @pval < 0.05 %>
-わりと<%= keikou %>消えています．
+  <% sentence += "わりと#{keikou}消えています．" %>
 <% elsif @pval < 0.1 %>
-ちょっと<%= keikou %>消えています．
+  <% sentence += "ちょっと#{keikou}消えています．" %>
 <% else %>
-べつに<%= keikou %>消えていません．
+  <% sentence += "べつに#{keikou}消えています．" %>
 <% end %>
-</p>
+
+<p><%= sentence %></p>
+
 <% if @pval && @cov %>
 <p>(それぞれのひとが24時間それぞれに一定の確率で消えるというモデルでなんとか説明しようとして，こんなに<%= keikou %>消えちゃう確率は<%= format('%.1G', @pval) %>とかそんなもん．)</p>
 <% end # @pval && @cov %>
+
+<div id="tbox"></div>
+<script type="text/javascript">
+      twttr.anywhere(function (T) {
+        T("#tbox").tweetBox({
+          height: 100,
+          width: 400,
+          defaultContent: "<%= sentence %>"
+        });
+      });
+</script>
+
 
 <% else # @same %>
 <p>@<%= h(@a) %>と@<%= h(@b) %>は，おなじひとなんだからいっしょに消えてるにきまってる．</p>
@@ -38,7 +52,7 @@
 <p>同時に消えるといっても，たんに，同じ話題でよくもりあがるだけかもしれません．</p>
 
 <% if current_user %>
-<p>@<%= current_user.screen_name %>としてログインしています．<%= link_to 'トップにもどる', root_url %></p>
+<p>@<%= current_user.screen_name %>としてログインしています．<%= link_to 'トップにもどる', root_url %> <%= link_to 'ログアウト', :controller => 'session', :action => 'destroy' </p>
 <% else %>
 <p>ログインしていないのにこのページにいる．なにかおかしい．</p>
 <% end %>

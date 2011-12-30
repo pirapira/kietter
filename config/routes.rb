@@ -51,6 +51,7 @@ Kietter::Application.routes.draw do
   root :to => 'home#index'
   match '/investigate' => 'home#investigate'
   match '/auth/twitter/callback' => 'session#callback'
+  match '/auth/logout' => 'session#destroy'
 
   # See how all your routes lay out with "rake routes"
 

@@ -11,6 +11,6 @@ class SessionController < ApplicationController
 
   def destroy
     session.clear
-    redirect_to :back
+    redirect_to root_url
   end
 end
