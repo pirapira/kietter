@@ -26,6 +26,7 @@ There are some missing files in the repository.  On each file, you need to fill 
 ./config/database.yml according to your database setting.
 
 config/initializers/omniauth.rb according to dev.twitter.com (register your own application)
+
     Rails.application.config.middleware.use OmniAuth::Builder do
       case Rails.env
       when 'production'
@@ -35,7 +36,6 @@ config/initializers/omniauth.rb according to dev.twitter.com (register your own 
       end
       OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
     end
-    
     Twitter.configure do |config|
       case Rails.env
       when 'production'
@@ -48,6 +48,7 @@ config/initializers/omniauth.rb according to dev.twitter.com (register your own 
     end
 
 config/initializers/exception_notification.rb according to your needs
+
     Kietter::Application.config.middleware.use ExceptionNotifier,
       :email_prefix => "[ERROR] ",
       :sender_address => 'XXX',
