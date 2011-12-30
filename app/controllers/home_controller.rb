@@ -40,7 +40,9 @@ class HomeController < ApplicationController
       a_samples = YAML::load(a_target.samples)
       b_samples = YAML::load(b_target.samples)
     logger.info "----------------------loaded "
-      @pval = kentei(a_samples, b_samples)
+      k = kentei(a_samples, b_samples)
+      @pval = k[:pval]
+      @cov  = k[:cov]
     rescue Twitter::Error::Unauthorized
       session[:notice] = "鍵つきアカウントには使えません．"
       redirect_to root_url
@@ -81,6 +83,6 @@ class HomeController < ApplicationController
     rescue NoMethodError
       results = [nil,nil]
     end
-    return results[1]
+    return {:pval => results[1], :cov => results[0]}
   end 
 end
