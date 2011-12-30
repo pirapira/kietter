@@ -13,10 +13,10 @@ class Target < ActiveRecord::Base
     return if sample_end && sample_end >= Time.now - 7.days
     look = u.look(self.uid, sample_end)
     arr = look[:array]
-    self.samples = nil unless look[:reached]
+    self.samples = nil
     arr.each {|t| t.utc}
     arr = arr.collect {|t| t.soroe}
-    arr = YAML::load(self.samples) + arr if self.samples
+    # arr = YAML::load(self.samples) + arr if self.samples
     arr.sort!.uniq!
     self.samples = YAML::dump(arr)
     self.sample_end = Time.now

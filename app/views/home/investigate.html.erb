@@ -14,7 +14,7 @@
    end
 %>
 
-<p>@<%= h(@a) %>と@<%= h(@b) %>はここ一ヶ月，
+<p>@<%= h(@a) %>と@<%= h(@b) %>は
 <% if @pval == nil %>
 <%= keikou %>消えているか，よくわからんぽん．
 <% elsif @pval < 0.01 %>
@@ -29,7 +29,6 @@
 </p>
 <% if @pval && @cov %>
 <p>(それぞれのひとが24時間それぞれに一定の確率で消えるというモデルでなんとか説明しようとして，こんなに<%= keikou %>消えちゃう確率は<%= format('%.1G', @pval) %>とかそんなもん．)</p>
-<p>(partial covariance: <%= format('%.2G', @cov) %>)</p>
 <% end # @pval && @cov %>
 
 <% else # @same %>

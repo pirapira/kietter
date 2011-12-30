@@ -2,6 +2,8 @@
 
 class HomeController < ApplicationController
   require 'yaml'
+  class Tsukaisugi < Exception
+  end
   class NotEnoughData < Exception
   end
   def index
@@ -25,7 +27,13 @@ class HomeController < ApplicationController
     logger.info "----------------------now logged in "
     begin
       c = current_user.client
-      raise Twitter::Error::BadRequest if c.rate_limit_status.remaining_hits < 20
+      c.current_user
+      raise Tsukaisugi if c.rate_limit_status.remaining_hits < 20
+      if a == "" || b == ""
+        session[:notice] = "empty screen names given."
+        redirect_to root_url
+        return
+      end
       a_user = c.user a
       b_user = c.user b
       a_uid  = a_user.attrs["id"]
@@ -53,10 +61,18 @@ class HomeController < ApplicationController
       session[:notice] = "鍵つきアカウントには使えません．"
       redirect_to root_url
     rescue Twitter::Error::Unauthorized
+      current_user.destroy
+      session[:user_id] = nil
       session[:notice] = "鍵つきアカウントには使えません．"
       redirect_to root_url
     rescue Twitter::Error::NotFound
       session[:notice] = "そのひとはみつかりません．"
+      redirect_to root_url
+    rescue Tsukaisugi
+      session[:notice] = "つかいすぎです．"
+      redirect_to root_url
+    rescue Twitter::Error::ServiceUnavailable
+      session[:notice] = "twitter not available; try again..."
       redirect_to root_url
     rescue Twitter::Error::BadRequest
       session[:notice] = "つかいすぎです．"
