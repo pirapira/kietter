@@ -75,7 +75,7 @@ class HomeController < ApplicationController
     R.assign "a_row", (as = range.collect {|t| if a_set.include? t then 1 else 0 end})
     R.assign "b_row", (bs = range.collect {|t| if b_set.include? t then 1 else 0 end})
     R.assign "c_row", (range.collect {|t| t.hour})
-    return 0.0 if as == bs && as.length > 5
+    return {:pval => 0.0, :cov => 1.0} if as == bs && as.length > 5
     R.eval "y.data <- data.frame( as = a_row, bs = b_row, cs = c_row )"
     R.eval "library(ppcor)"
     begin
