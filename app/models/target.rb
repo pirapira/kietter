@@ -11,7 +11,9 @@ class Target < ActiveRecord::Base
   def fill(u)
     require 'yaml'
     return if sample_end && sample_end >= Time.now - 7.days
-    arr = u.look(self.uid, sample_end)
+    look = u.look(self.uid, sample_end)
+    arr = look[:array]
+    self.samples = nil unless look[:reached]
     arr.each {|t| t.utc}
     arr = arr.collect {|t| t.soroe}
     arr = YAML::load(self.samples) + arr if self.samples
