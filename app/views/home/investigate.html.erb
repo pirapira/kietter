@@ -13,7 +13,6 @@
      keikou = "交互にTwitterから"
    end
 %>
-
 <% sentence = "@#{h(@a)}と@#{h(@b)}は" %>
 <% if @pval == nil %>
   <% sentence += keikou + "消えているか，よくわからんぽん．" %>
@@ -52,7 +51,7 @@
 <p>同時に消えるといっても，たんに，同じ話題でよくもりあがるだけかもしれません．</p>
 
 <% if current_user %>
-<p>@<%= current_user.screen_name %>としてログインしています．<%= link_to 'トップにもどる', root_url %> <%= link_to 'ログアウト', :controller => 'session', :action => 'destroy' </p>
+<p>@<%= current_user.screen_name %>としてログインしています．<%= link_to 'トップにもどる', root_url %> <%= link_to 'ログアウト', :controller => 'session', :action => 'destroy' %> </p>
 <% else %>
 <p>ログインしていないのにこのページにいる．なにかおかしい．</p>
 <% end %>
