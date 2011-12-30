@@ -8,8 +8,9 @@ installation
 
 Prerequisites:
 
-* R is necessary.  Moreover, the ppcor package of R is necessary. add url
-* Using your twitter account, register an application on dev.twitter.com
+* R is necessary.  http://www.r-project.org/
+* Moreover, the ppcor package of R is necessary.  http://cran.freestatistics.org/web/packages/ppcor/
+* Using your twitter account, register an application on http://dev.twitter.com
 
 There are some missing files in the repository.  On each file, you need to fill in XXX.
 
