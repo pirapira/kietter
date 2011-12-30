@@ -30,6 +30,10 @@ class HomeController < ApplicationController
       b_uid  = b_user.attrs["id"]
       @a = a_user.attrs["screen_name"]
       @b = b_user.attrs["screen_name"]
+      if a_uid == b_uid
+        @same = true
+        return
+      end
       a_target = Target.find_or_create a_uid
       b_target = Target.find_or_create b_uid
     logger.info "----------------------target set"

@@ -3,6 +3,7 @@
 <p>えっと，<%= h(session[:notice]) %> </p>
 <% end %>
 
+<% unless @same %>
 <% if @cov == nil || @cov == 0.0
      keikou = ""
    elsif @cov > 0.0
@@ -27,6 +28,10 @@
 </p>
 <p>(それぞれのひとが24時間それぞれに一定の確率で消えるというモデルでなんとか説明しようとして，こんなに<%= keikou %>消えちゃう確率は<%= format('%.1G', @pval) %>とかそんなもん．)</p>
 <p>(partial covariance: <%= format('%.2G', @cov) %>)</p>
+
+<% else # @same %>
+<p>@<%= h(@a) %>と@<%= h(@b) %>は，おなじひとなんだからいっしょに消えてるにきまってる．</p>
+<% end %>
 
 <% if current_user %>
 <p>@<%= current_user.screen_name %>としてログインしています．</p>
