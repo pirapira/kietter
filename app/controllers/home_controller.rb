@@ -53,6 +53,9 @@ class HomeController < ApplicationController
       k = kentei(a_samples, b_samples)
       @pval = k[:pval]
       @cov  = k[:cov]
+    rescue MultiJson::DecodeError
+      session[:notice] = "twitter returned something strange"
+      redirect_to root_url
     rescue NotEnoughData
       session[:notice] = "なんかtweetが拾えませんでした．"
       redirect_to root_url
