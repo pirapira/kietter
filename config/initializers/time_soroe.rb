@@ -3,7 +3,11 @@ class DateTime
     1.hour
   end
   def soroe
-    self - self.min.minutes - self.sec.seconds
+    y = self.utc.year
+    mon = self.utc.month
+    day = self.utc.day
+    hour = self.utc.hour
+    DateTime.new( y, mon, day, hour)
   end
   def classify
     hour

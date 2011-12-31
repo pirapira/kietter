@@ -86,8 +86,10 @@ class HomeController < ApplicationController
     require "rinruby"
     require 'set'
     raise NotEnoughData unless a_arr[0] && b_arr[0]
-    kara = [a_arr[0], b_arr[0]].max
-    made = [a_arr[-1],b_arr[-1]].min
+    kara = [a_arr[0], b_arr[0],(Time.now - 3.months).to_datetime.soroe].max.soroe
+    made = [a_arr[-1],b_arr[-1],(Time.now).to_datetime.soroe].min.soroe
+    a_arr = a_arr.collect {|a| a.soroe}
+    b_arr = b_arr.collect {|b| b.soroe}
     raise NotEnoughData if kara > made
     a_set = Set.new a_arr
     b_set = Set.new b_arr
@@ -101,11 +103,12 @@ class HomeController < ApplicationController
     R.assign "a_row", (as = range.collect {|t| if a_set.include? t then 1 else 0 end})
     R.assign "b_row", (bs = range.collect {|t| if b_set.include? t then 1 else 0 end})
     R.assign "c_row", (range.collect {|t| t.hour})
+    R.assign "d_row", (range.collect {|t| t.wday})
     return {:pval => 0.0, :cov => 1.0} if as == bs && as.length > 5
-    R.eval "y.data <- data.frame( as = a_row, bs = b_row, cs = c_row )"
+    R.eval "y.data <- data.frame( as = a_row, bs = b_row, cs = c_row, ds = d_row )"
     R.eval "library(ppcor)"
     begin
-      results = R.pull 'as.numeric(pcor.test(y.data$as,y.data$bs,y.data[,c("cs")]))'
+      results = R.pull 'as.numeric(pcor.test(y.data$as,y.data$bs,y.data[,c("cs", "ds")]))'
     rescue NoMethodError
       results = [nil,nil]
     end
