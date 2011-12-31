@@ -36,12 +36,10 @@ class User < ActiveRecord::Base
     last_id_str = nil
     n = 0
     begin
-      break if n >= 4
-      th1 = Thread.new{ getpage(1 + 4 * n, c, target)}
-      th2 = Thread.new{ getpage(2 + 4 * n, c, target)}
-      th3 = Thread.new{ getpage(3 + 4 * n, c, target)}
-      th4 = Thread.new{ getpage(4 + 4 * n, c, target)}
-      tl = th1.value + th2.value + th3.value + th4.value
+      break if n >= 2
+      th1 = Thread.new{ getpage(1 + 2 * n, c, target)}
+      r2 = getpage(2 + 2 * n, c, target)
+      tl = th1.value + r2
       break if tl == []
       ret += tl.collect {|t| t.attrs["created_at"].to_datetime}
       n = n + 1
