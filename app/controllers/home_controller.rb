@@ -24,7 +24,6 @@ class HomeController < ApplicationController
       return
     end
     # now logged in
-    logger.info "----------------------now logged in "
     begin
       c = current_user.client
       c.current_user
@@ -46,14 +45,11 @@ class HomeController < ApplicationController
       end
       a_target = Target.find_or_create a_uid
       b_target = Target.find_or_create b_uid
-    logger.info "----------------------target set"
       a_th = Thread.new {a_target.fill(current_user)}
       b_target.fill(current_user)
       a_th.join
-    logger.info "----------------------filled"
       a_samples = YAML::load(a_target.samples)
       b_samples = YAML::load(b_target.samples)
-    logger.info "----------------------loaded "
       k = kentei(a_samples, b_samples)
       @pval = k[:pval]
       @cov  = k[:cov]
